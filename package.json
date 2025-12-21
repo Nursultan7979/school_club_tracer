@@ -1,0 +1,21 @@
+{
+  "name": "school-club-tracker",
+  "version": "1.0.0",
+  "description": "School Club Tracker - MERN 2 Final Project",
+  "private": true,
+  "workspaces": [
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "dev": "docker-compose up",
+    "build": "npm run build --workspace=server && npm run build --workspace=client",
+    "test": "npm run test --workspace=server"
+  }
+}
+
+
+
+
+
+
