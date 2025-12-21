@@ -6,14 +6,25 @@ import bcrypt from 'bcryptjs';
 let mongoServer: MongoMemoryServer;
 
 beforeAll(async () => {
-  mongoServer = await MongoMemoryServer.create();
-  const mongoUri = mongoServer.getUri();
-  await mongoose.connect(mongoUri);
+  try {
+    mongoServer = await MongoMemoryServer.create({
+      instance: {
+        ip: '127.0.0.1', 
+      },
+    });
+    const mongoUri = mongoServer.getUri();
+    await mongoose.connect(mongoUri);
+  } catch (error) {
+    console.error('Failed to start MongoMemoryServer:', error);
+    throw error;
+  }
 });
 
 afterAll(async () => {
   await mongoose.disconnect();
-  await mongoServer.stop();
+  if (mongoServer) {
+    await mongoServer.stop();
+  }
 });
 
 afterEach(async () => {
@@ -128,7 +139,7 @@ describe('Integration Tests', () => {
       }
     }
 
-    expect(memberships.length).toBe(6); 
+    expect(memberships.length).toBe(6);
 
     for (const club of clubs) {
       const count = await Membership.countDocuments({ club: club._id, status: 'ACTIVE' });
