@@ -30,7 +30,7 @@ services:
     environment:
       NODE_ENV: development
       MONGO_URI: mongodb://admin:password@mongo:27017/school_club_tracker?authSource=admin
-      JWT_SECRET: your-super-secret-jwt-key-change-in-production
+      JWT_SECRET: iamsadullaevn
       PORT: 4000
     depends_on:
       mongo:
